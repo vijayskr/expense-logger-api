@@ -23,6 +23,21 @@ expCatConroller.route('/').get(function (req, res) {
     });
 });
 
+//Get Category by ID
+expCatConroller.route('/:id').get(function(req, res) {
+   
+    let catID = req.params.id;
+
+    expCatModel.findOne({ _id: catID }, function(err, expCat) {
+        if(err) {
+            res.json({ "Success": false, "Message": "Expense Category not found" });
+        }
+        else {
+            res.json({ "Success": true, "Data": expCat });
+        }
+    });
+});
+
 //Add New Expense Category
 expCatConroller.route('/add').post(function (req, res) {
     let expCat = new expCatModel(req.body);
